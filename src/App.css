@@ -1,0 +1,24 @@
+.App {
+  text-align: center;
+  background: rgb(255,255,255);
+  background: radial-gradient(circle, rgba(255,255,255,1) 0%, rgba(12,0,52,1) 100%);
+}
+
+.cardlist{
+  margin-top: 20px;
+}
+
+.bottomborder{
+  background: #FF7600;
+  width:100%;
+  height:80px;
+  margin-top: 40px;
+}
+
+
+
+
+/* #0C0034 (dark blueish/black)
+#FF7600 (orange)
+#FFFDD6 (yellow)
+#FFFFFF (white) */
