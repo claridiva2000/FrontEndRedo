@@ -9,18 +9,22 @@ import Register from './component/register/register';
 import Navbar from './component/navbar/navbar';
 import Landing from './component/landing/landing';
 // import Dashboard from './component/dashboard/dashboard';
+//Alerts
+import Alert from './component/messages/alert';
 //style
 import './App.css';
 //redux
-// import {Provider} from 'react-redux';
-// import store from './store'
+import {Provider} from 'react-redux';
+import store from './store'
 
 const App = () => (
+  <Provider store={store}>
   <Router>
     <Fragment>
       <Route exact path="/" component={Landing} />
-      <section className="container">
+      <section className="container App">
         <Navbar />
+        <Alert/>
         <Switch>
           <Route exact path="/register" component={Register} />
           <Route exact path="/login" component={Login} />
@@ -28,6 +32,7 @@ const App = () => (
       </section>
     </Fragment>
   </Router>
+  </Provider>
 );
 
 export default App;

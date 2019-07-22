@@ -34,7 +34,7 @@ export const register = ({
 
     dispatch({
       type: REGISTER_SUCCESS,
-      payload: res.data
+      payload: res.data //token is in here
     });
   } catch (err) {
     const errors = err.response.data.errors;

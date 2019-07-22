@@ -1,9 +1,9 @@
 import React, { Fragment, useState } from 'react';
 //connect redux
-// import { connect } from 'react-redux';
+import { connect } from 'react-redux';
 //from actions
-// import { setAlert } from '../../actions/alert';
-// import { register } from '../../actions/auth';
+import { setAlert } from '../../actions/alert';
+import { register } from '../../actions/auth';
 //router
 import { Link } from 'react-router-dom';
 //style
@@ -14,9 +14,9 @@ import './register.styles.css';
 //axios
 // import Axios from 'axios';
 //proptypes- shortcut 'impt'
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 
-const Register = () => {
+const Register = ({ setAlert, register }) => {
   const [formData, setFormDate] = useState({
     email: '',
     password: '',
@@ -35,16 +35,18 @@ const Register = () => {
     profilepic
   } = formData;
 
+  const onChange = e =>
+    setFormDate({ ...formData, [e.target.name]: e.target.value });
 
- const onChange = e => setFormDate({...formData, [e.target.name]: e.target.value });
+  const onSubmit = async e => {
+    e.preventDefault();
+    if (password.length === 0) {
+      setAlert('Password cannot be blank', 'danger');
+    } else {
+      register({ email, password, firstname, lastname, location });
+    }
+  };
 
-const onSubmit = async e=> { e.preventDefault();
-if (password.length === 0) {
-  console.log('Please enter a password')
-} else  {
- console.log('success') }
-}
-    
   return (
     <Fragment>
       <div className="register">
@@ -61,12 +63,12 @@ if (password.length === 0) {
             </div>
           </div>
 
-          <form onSubmit={e=>onSubmit(e)}>
+          <form onSubmit={e => onSubmit(e)}>
             <input
               type="text"
               placeholder="*First Name"
               name="firstname"
-              onChange={e=>onChange(e)}
+              onChange={e => onChange(e)}
               value={firstname}
             />
             {/* {errors.firstname && <InlineError text={errors.firstname} />} */}
@@ -75,7 +77,7 @@ if (password.length === 0) {
               type="text"
               placeholder="*Last Name"
               name="lastname"
-              onChange={e=>onChange(e)}
+              onChange={e => onChange(e)}
               value={lastname}
             />
             {/* {errors.lastname && <InlineError text={errors.lastname} />} */}
@@ -84,7 +86,7 @@ if (password.length === 0) {
               type="text"
               placeholder="*location"
               name="location"
-              onChange={e=>onChange(e)}
+              onChange={e => onChange(e)}
               value={location}
             />
             {/* {errors.location && <InlineError text={errors.location} />} */}
@@ -93,7 +95,7 @@ if (password.length === 0) {
               type="text"
               placeholder="Profile Picture URL"
               name="profilepic"
-              onChange={e=>onChange(e)}
+              onChange={e => onChange(e)}
               value={profilepic}
             />
 
@@ -101,7 +103,7 @@ if (password.length === 0) {
               type="email"
               placeholder="*Email"
               name="email"
-              onChange={e=>onChange(e)}
+              onChange={e => onChange(e)}
               value={email}
             />
             {/* {errors.email && <InlineError text={errors.email} />} */}
@@ -110,7 +112,7 @@ if (password.length === 0) {
               type="text"
               placeholder="*Password"
               name="password"
-              onChange={e=>onChange(e)}
+              onChange={e => onChange(e)}
               value={password}
             />
             {/* {errors.password && <InlineError text={errors.password} />} */}
@@ -129,6 +131,13 @@ if (password.length === 0) {
       </div>
     </Fragment>
   );
-  };
+};
 
-export default Register;
+Register.propTypes = {
+  setAlert: PropTypes.func.isRequired
+};
+
+export default connect(
+  null,
+  { setAlert, register }
+)(Register);

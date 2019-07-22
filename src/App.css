@@ -16,6 +16,17 @@
 }
 
 
+.alert-danger{
+  background: #FF7600;
+  color: #0C0034;
+  margin:auto;
+  width: 60%;
+  text-align: center;
+  font-size: 2rem;
+  margin-top:80px;
+
+}
+
 
 
 /* #0C0034 (dark blueish/black)
