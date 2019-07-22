@@ -4,7 +4,6 @@ import Navbar from '../navbar/navbar';
 const dashboard = (props) => {
   return (
     <section>
-      <Navbar />
 
       <div>
         <div>

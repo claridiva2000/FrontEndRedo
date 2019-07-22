@@ -1,22 +1,19 @@
 import React, { Fragment, useState } from 'react';
+//router
+import { Link, Redirect } from 'react-router-dom';
 //connect redux
 import { connect } from 'react-redux';
 //from actions
 import { setAlert } from '../../actions/alert';
 import { register } from '../../actions/auth';
-//router
-import { Link } from 'react-router-dom';
+
 //style
 import './register.styles.css';
-//validation
-// import Validator from 'validator';
-// import InlineError from '../messages/InlineError';
-//axios
-// import Axios from 'axios';
+
 //proptypes- shortcut 'impt'
 import PropTypes from 'prop-types';
 
-const Register = ({ setAlert, register }) => {
+const Register = ({ setAlert, register,isAuthenticated }) => {
   const [formData, setFormDate] = useState({
     email: '',
     password: '',
@@ -47,6 +44,10 @@ const Register = ({ setAlert, register }) => {
     }
   };
 
+  if(isAuthenticated) {
+    return <Redirect to='/dashboard'/>
+  }
+
   return (
     <Fragment>
       <div className="register">
@@ -71,7 +72,6 @@ const Register = ({ setAlert, register }) => {
               onChange={e => onChange(e)}
               value={firstname}
             />
-            {/* {errors.firstname && <InlineError text={errors.firstname} />} */}
 
             <input
               type="text"
@@ -80,7 +80,6 @@ const Register = ({ setAlert, register }) => {
               onChange={e => onChange(e)}
               value={lastname}
             />
-            {/* {errors.lastname && <InlineError text={errors.lastname} />} */}
 
             <input
               type="text"
@@ -89,7 +88,6 @@ const Register = ({ setAlert, register }) => {
               onChange={e => onChange(e)}
               value={location}
             />
-            {/* {errors.location && <InlineError text={errors.location} />} */}
 
             <input
               type="text"
@@ -106,7 +104,6 @@ const Register = ({ setAlert, register }) => {
               onChange={e => onChange(e)}
               value={email}
             />
-            {/* {errors.email && <InlineError text={errors.email} />} */}
 
             <input
               type="text"
@@ -115,7 +112,6 @@ const Register = ({ setAlert, register }) => {
               onChange={e => onChange(e)}
               value={password}
             />
-            {/* {errors.password && <InlineError text={errors.password} />} */}
 
             <p>
               Already registered? <Link to="/login">Login Here!</Link>
@@ -134,10 +130,16 @@ const Register = ({ setAlert, register }) => {
 };
 
 Register.propTypes = {
-  setAlert: PropTypes.func.isRequired
+  setAlert: PropTypes.func.isRequired,
+  register: PropTypes.func.isRequired,
+  isAuthenticated: PropTypes.bool,
 };
 
+const mapStateToProps = state => ({
+  isAuthenticated: state.auth.isAuthenticated
+})
+
 export default connect(
-  null,
+  mapStateToProps,
   { setAlert, register }
 )(Register);
