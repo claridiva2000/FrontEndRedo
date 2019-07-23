@@ -1,43 +1,49 @@
-import React, {useEffect}from 'react';
-import {connect} from 'react-redux';
-import {getCurrentProfile} from '../../actions/profile';
+import React, { useEffect, Fragment } from 'react';
+import { connect } from 'react-redux';
+import { getCurrentProfile } from '../../actions/profile';
 import PropTypes from 'prop-types';
+import Spinner from '../messages/spinner';
+import Chefcardlist from '../cardlist/chefcardlist';
 
-
-const Dashboard = ({getCurrentProfile, auth, profile}) => {
-  useEffect(()=>{
-    getCurrentProfile()
-  }, [])
-  return (
-    <section>
-
+const Dashboard = ({
+  getCurrentProfile,
+  auth,
+  chef,
+  profile: { profile, loading }
+}) => {
+  useEffect(() => {
+    getCurrentProfile();
+  }, []);
+  return loading && profile === null ? (
+    <Spinner />
+  ) : (
+    <Fragment>
+      <h1>Dashboard</h1>
+      <p>Welcome, Chef {chef.lastname}</p>
+      <img src="{chef.profilepic}" alt="" />
+      <p>Location: {chef.location}</p>
+      <p>email: {chef.email}</p>
       <div>
-        <div>
-          <h1>ChefPortfolio</h1>
-          <p>Welcome ,Chef Ramsey!</p>
-          <div>
-            <a href="">Register</a>
-            <a href="">Login</a>
-          </div>
-        </div>
+        <Chefcardlist name={chef.firstname} />
       </div>
-    </section>
+    </Fragment>
   );
 };
 
-
-
-Dashboard.propTypes ={
+Dashboard.propTypes = {
   getCurrentProfile: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired,
-  profile: PropTypes.object.isRequired,
+  profile: PropTypes.object.isRequired
 };
 
 const mapStateToProps = state => ({
   auth: state.auth,
   profile: state.profile,
+  chef: state.profile.chef
+  // recipes: state.profile.recipes
+});
 
-
-})
-
-export default connect(mapStateToProps, {getCurrentProfile })(Dashboard) ;
+export default connect(
+  mapStateToProps,
+  { getCurrentProfile }
+)(Dashboard);

@@ -1,8 +1,7 @@
-import { GET_PROFILE, PROFILE_ERROR } from '../actions/types';
+import { GET_PROFILE, PROFILE_ERROR, GET_RECIPES, RECIPE_ERROR } from '../actions/types';
 
 const initialState = {
-  profile: null,
-  profiles: [],
+  chef:{},
   recipes: [],
   loading: true,
   error: {}
@@ -15,7 +14,7 @@ export default function(state = initialState, action) {
     case GET_PROFILE:
       return {
         ...state,
-        payload: payload,
+        chef: payload,
         loading: false
       };
 
@@ -25,6 +24,20 @@ export default function(state = initialState, action) {
         error: payload,
         loading: false
       };
+
+      case GET_RECIPES:
+        return{
+          ...state,
+          recipes:payload,
+          loading:false
+        }
+
+      case RECIPE_ERROR:
+        return {
+          ...state,
+          error:payload,
+          loading:false
+        }
 
     default:
       return state;

@@ -3,6 +3,7 @@ import Card from '../card/card';
 import './cardlist.styles.css';
 
 const cardlist = props => {
+  console.log(props.recipes)
   return (
     <div className="cardlist">
       {props.recipes.map(recipe => (

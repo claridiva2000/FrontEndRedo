@@ -6,7 +6,8 @@ import {
   CHEF_LOADED,
   AUTH_ERROR,
   LOGIN_SUCCESS,
-  LOGIN_FAIL
+  LOGIN_FAIL,
+  LOGOUT
 } from './types';
 import setAuthToken from '../utils/setAuthToken';
 
@@ -65,7 +66,7 @@ export const register = ({
       type: REGISTER_SUCCESS,
       payload: res.data //token is in here
     });
-    dispatch(loadChef())
+    dispatch(loadChef());
   } catch (err) {
     const errors = err.response.data.errors;
 
@@ -101,7 +102,7 @@ export const login = (email, password) => async dispatch => {
       payload: res.data //token is in here
     });
 
-    dispatch(loadChef())
+    dispatch(loadChef());
   } catch (err) {
     const errors = err.response.data.errors;
 
@@ -113,4 +114,9 @@ export const login = (email, password) => async dispatch => {
       type: LOGIN_FAIL
     });
   }
+};
+
+//LOGOUT
+export const logout = () => dispatch => {
+  dispatch({ type: LOGOUT });
 };

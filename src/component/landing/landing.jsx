@@ -25,7 +25,7 @@ export class Landing extends Component {
       recipe.name.toLowerCase().includes(searchField.toLowerCase())
     );
 
-    return (
+    return ( 
       <div className="App">
         <Header
           placeholder="🔎 Search Recipes"

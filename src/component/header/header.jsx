@@ -2,8 +2,33 @@ import React from 'react';
 import {Link} from 'react-router-dom';
 import Search from '../search/searchbox';
 import './header.styles.css';
+import { connect } from 'react-redux';
+import { logout } from '../../actions/auth';
 
-const header = ({ placeholder, handleChange }) => {
+const header = ({ placeholder, handleChange,auth: { isAuthenticated, loading }, logout  }) => {
+
+  const authlinks = (
+    <div>
+      <Link to="/"> All Recipes</Link>
+      <Link to="/dashboard">Dashboard</Link>
+      <a href="#" onClick={logout}>
+        <i className="fas fa-sign-out-alt" /> log Out
+      </a>
+    </div>
+  );
+
+  const guestlinks = (
+    <div className='buttons'>
+      <button className="signupbtn">
+        <Link to="/register">SignUp</Link>
+      </button>
+
+      <button className="loginbtn">
+        <Link to="/login">Login</Link>
+      </button>
+    </div>
+  );
+  
   return (
     <div className="header">
       <div className="smlogo">
@@ -22,12 +47,14 @@ const header = ({ placeholder, handleChange }) => {
       </div>
 
       <div className="buttons">
-        <button className="signupbtn"><Link to='/register'>SignUp</Link></button>
-        
-        <button className="loginbtn"><Link to='/login'>Login</Link></button>
+      {isAuthenticated ? authlinks : guestlinks} 
       </div>
     </div>
   );
 };
 
-export default header;
+const mapStateToProps = state => ({
+  auth: state.auth
+}); 
+
+export default connect(mapStateToProps, {logout}) (header);
