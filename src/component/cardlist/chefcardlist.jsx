@@ -27,7 +27,7 @@ export class chefcardlist extends Component {
     console.log(this.props.name);
     return (
       <div >
-        <AddRecipe/>
+        {/* <AddRecipe/> */}
         <Cardlist recipes={filteredRecipes} className="cardlist" />
 
         <div className="bottomborder" />
