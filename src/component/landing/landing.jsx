@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 
 import Header from '../header/header';
-import Cardlist from '../cardlist/cardlist'
+import Cardlist from '../cardlist/cardlist';
+import Spinner from '../messages/spinner'
 
 export class Landing extends Component {
   state = {

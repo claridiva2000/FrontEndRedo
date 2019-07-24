@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Cardlist from '../cardlist/cardlist';
-import AddRecipe from '../addrecipe/AddRecipe'
+
+// import AddRecipe from '../addrecipe/AddRecipe'
 
 export class chefcardlist extends Component {
   state = {
@@ -11,7 +12,7 @@ export class chefcardlist extends Component {
   componentDidMount() {
     fetch('https://chefportfoliofinal.herokuapp.com/recipes')
       .then(res => res.json())
-      .then(food => this.setState({ recipes: food }));
+       .then(food => this.setState({ recipes: food }));
   }
 
   // handleChange = e => {
@@ -24,7 +25,7 @@ export class chefcardlist extends Component {
     const filteredRecipes = recipes.filter(recipe =>
       recipe.chef.firstname.includes(this.props.name)
     );
-    console.log(this.props.name);
+    console.log(this.state.recipes);
     return (
       <div >
         {/* <AddRecipe/> */}

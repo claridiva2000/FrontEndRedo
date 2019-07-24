@@ -1,6 +1,9 @@
 import axios from 'axios';
 import { setAlert } from './alert';
 import {
+  GET_RECIPES,
+  RECIPE_POSTED,
+  RECIPE_ERROR,
   REGISTER_SUCCESS,
   REGISTER_FAIL,
   CHEF_LOADED,
@@ -10,6 +13,86 @@ import {
   LOGOUT
 } from './types';
 import setAuthToken from '../utils/setAuthToken';
+
+
+
+//LOAD RECIPES
+export const loadRecipes = () => async dispatch => {
+  if (localStorage.token) {
+    setAuthToken(localStorage.token);
+  }
+  try {
+    const res = await axios.get(
+      'https://chefportfoliofinal.herokuapp.com/recipes'
+    );
+
+    dispatch({
+      type: GET_RECIPES,
+      payload: res.data
+    });
+  } catch (err) {
+    dispatch({
+      type: RECIPE_ERROR
+    });
+  }
+};
+
+//Post Recipe
+export const postRecipe = ({
+  picture,
+  name,
+  ingredients,
+  description,
+  mealtype,
+  breakfast,
+  lunch,
+  dinner,
+  dessert,
+  snack
+}) => async dispatch => {
+  const config = {
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  };
+  const body = JSON.stringify({
+    picture,
+  name,
+  ingredients,
+  description,
+  mealtype,
+  breakfast,
+  lunch,
+  dinner,
+  dessert,
+  snack
+  });
+
+  try {
+    const res = await axios.post(
+      'https://chefportfoliofinal.herokuapp.com/recipes',
+      body,
+      config
+    );
+
+    dispatch({
+      type: RECIPE_POSTED,
+      payload: res.data //token is in here
+    });
+    dispatch(loadRecipes());
+  } catch (err) {
+    const errors = err.response.data.errors;
+
+    if (errors) {
+      errors.forEach(error => dispatch(setAlert(error.msg, 'danger')));
+    }
+
+    dispatch({
+      type: RECIPE_ERROR
+    });
+  }
+};
+
 
 //LOAD CHEF
 export const loadChef = () => async dispatch => {

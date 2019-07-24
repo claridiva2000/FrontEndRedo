@@ -4,6 +4,7 @@ import { getCurrentProfile } from '../../actions/profile';
 import PropTypes from 'prop-types';
 import Spinner from '../messages/spinner';
 import Chefcardlist from '../cardlist/chefcardlist';
+import AddRecipe from '../addrecipe/AddRecipe'
 
 const Dashboard = ({
   getCurrentProfile,
@@ -20,10 +21,11 @@ const Dashboard = ({
     <Fragment>
       <h1>Dashboard</h1>
       <p>Welcome, Chef {chef.lastname}</p>
-      <img src="{chef.profilepic}" alt="" />
+      <img src={chef.profilepic} alt="" />
       <p>Location: {chef.location}</p>
       <p>email: {chef.email}</p>
       <div>
+        <AddRecipe/>
         <Chefcardlist name={chef.firstname} />
       </div>
     </Fragment>

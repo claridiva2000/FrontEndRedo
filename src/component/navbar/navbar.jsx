@@ -8,11 +8,11 @@ import { logout } from '../../actions/auth';
 const navbar = ({ auth: { isAuthenticated, loading }, logout }) => {
   const authlinks = (
     <div>
-      <Link to="/"> All Recipes</Link>
-      <Link to="/dashboard">Dashboard</Link>
-      <a href="#" onClick={logout}>
+      <Link to="/"><i className="fas fa-utensils"></i>  All Recipes</Link>
+      <Link to="/dashboard"><i className="far fa-user"></i>  Dashboard</Link>
+      <Link onClick={logout}>
         <i className="fas fa-sign-out-alt" /> log Out
-      </a>
+      </Link>
     </div>
   );
 
